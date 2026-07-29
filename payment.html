@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Payment - Khadar Electronic</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    background:#f5f5f5;
+}
+
+.header{
+    background:#0066ff;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.box{
+    background:white;
+    margin:20px;
+    padding:20px;
+    border-radius:15px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#0066ff;
+    color:white;
+    border:none;
+    border-radius:8px;
+    margin-top:15px;
+}
+
+.option{
+    background:#eee;
+    padding:15px;
+    margin:10px 0;
+    border-radius:10px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+<h1>💳 Payment</h1>
+
+<p>Khadar Electronic</p>
+
+</div>
+
+
+<div class="box">
+    <div id="paymentItems"></div>
+
+<h2 id="paymentTotal"></h2>
+
+<h2>Select Payment Method</h2>
+
+
+<div class="option">
+<input type="radio" name="pay">
+💵 Cash on Delivery
+</div>
+
+
+<div class="option">
+<input type="radio" name="pay">
+📱 Hormuud
+</div>
+
+
+<div class="option">
+<input type="radio" name="pay">
+📱 Golis
+</div>
+
+
+<div class="option">
+<input type="radio" name="pay">
+📱 Sahal
+</div>
+
+<button onclick="sendWhatsApp()">
+Send Order WhatsApp 📲
+</button>
+<button onclick="completePayment()">
+Confirm Order ✅
+</button>
+
+
+</div>
+
+
+
+<script>
+
+function completePayment(){
+
+alert("Order Confirmed Successfully ✅");
+
+window.location.href="my-orders.html";
+
+}
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let itemsBox = document.getElementById("paymentItems");
+
+let totalBox = document.getElementById("paymentTotal");
+
+let total = 0;
+
+
+cart.forEach(function(item){
+
+total += Number(item.price);
+
+itemsBox.innerHTML += `
+<p>
+${item.name} - £${item.price}
+</p>
+`;
+
+});
+
+
+totalBox.innerHTML = "Total: £" + total;
+</script>
+
+function sendWhatsApp(){
+
+let phone = "2520907437936"; 
+
+let message = 
+"Khadar Electronic Order%0A%0A" +
+"Waxaan rabaa inaan dalbado alaab.";
+
+let url = 
+"https://wa.me/" + phone + "?text=" + message;
+
+window.location.href = url;
+
+}
+
+</body>
+
+</html>

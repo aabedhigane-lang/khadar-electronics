@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>My Orders - Khadar Electronic</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    background:#f5f5f5;
+    margin:0;
+}
+
+.header{
+    background:#0066ff;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.order{
+    background:white;
+    margin:20px;
+    padding:20px;
+    border-radius:15px;
+}
+
+.status{
+    background:#eee;
+    padding:10px;
+    border-radius:8px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+<h1>📦 My Orders</h1>
+
+<p>Khadar Electronic</p>
+
+</div>
+
+
+<div id="myOrders"></div>
+
+
+
+<script>
+
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+let box = document.getElementById("myOrders");
+
+
+if(orders.length === 0){
+
+box.innerHTML = "<h2>No Orders Found</h2>";
+
+}
+
+
+orders.forEach(function(order,index){
+
+let items = "";
+
+
+order.items.forEach(function(item){
+
+items += `
+
+<p>
+${item.name} - £${item.price}
+</p>
+
+`;
+
+});
+
+
+box.innerHTML += `
+
+<div class="order">
+
+<h3>Order #${index + 1}</h3>
+
+${items}
+
+<p>
+Date: ${order.date}
+</p>
+
+
+<div class="status">
+<div class="status">
+
+${order.status || "Pending"}
+
+</div>
+if(order.status === "Delivered"){
+
+items += `
+<p>
+✅ Your order has been delivered
+</p>
+`;
+
+}
+
+else if(order.status === "Processing"){
+
+items += `
+<p>
+⚙️ Your order is being prepared
+</p>
+`;
+
+}
+
+else{
+
+items += `
+<p>
+🕒 Your order is waiting
+</p>
+`;
+
+}
+
+</div>
+
+
+</div>
+
+`;
+
+});
+
+let login = localStorage.getItem("login");
+
+if(login !== "true"){
+
+alert("Fadlan Login samee 🔐");
+
+window.location.href="login.html";
+
+}
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Khadar Electronic</title>
+
+    <style>
+    .bottom-menu{
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+width:100%;
+
+background:white;
+
+display:flex;
+
+justify-content:space-around;
+
+padding:10px;
+
+border-top:1px solid #ddd;
+
+}
+
+
+.bottom-menu a{
+
+text-decoration:none;
+
+color:#0066ff;
+
+text-align:center;
+
+font-size:14px;
+
+}
+        body {
+            font-family: Arial;
+            margin: 0;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: #0066ff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .search {
+            margin: 15px;
+            padding: 12px;
+            width: 85%;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+.card img{
+    border-radius:10px;
+}
+
+.card:hover{
+    transform:scale(1.05);
+    transition:0.3s;
+}
+        .card {
+            background: white;
+            width: 150px;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .card button {
+            background: #0066ff;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="header">
+
+<h1>
+📱 Khadar Electronic
+</h1>
+
+<p>
+Phones • Laptops • Accessories
+</p>
+
+</div>
+
+<center>
+<input class="search" id="searchBox" placeholder="Search products..." onkeyup="searchProduct()">
+<div class="categories">
+
+<button onclick="filterCategory('all')">
+All
+</button>
+
+<button onclick="filterCategory('Phone')">
+📱 Phones
+</button>
+
+<button onclick="filterCategory('Laptop')">
+💻 Laptops
+</button>
+
+<button onclick="filterCategory('Accessories')">
+🎧 Accessories
+</button>
+
+<button onclick="filterCategory('Watch')">
+⌚ Watches
+</button>
+
+</div>
+</center>
+
+<div class="products" id="products">
+</div>
+<script src="database.js"></script>
+<script src="cart.js"></script>
+
+<script>
+
+let products = JSON.parse(localStorage.getItem("products")) || [];
+
+let box = document.getElementById("products");
+
+products.forEach(function(product){
+
+box.innerHTML += `
+
+<div class="card">
+
+<img src="${product.image}" width="120">
+
+<h3>${product.name}</h3>
+
+<p class="category">${product.category}</p>
+
+<p>£${product.price}</p>
+
+<button onclick="viewProduct('${product.name}')">
+View Product 👁️
+</button>
+<button onclick="addToCart('${product.name}','${product.price}')">
+Add To Cart 🛒
+</button>
+
+</div>
+
+`;
+
+});
+
+</script>
+<script>
+
+function searchProduct(){
+
+let input = document.getElementById("searchBox").value.toLowerCase();
+
+let cards = document.querySelectorAll(".card");
+
+cards.forEach(function(card){
+
+let text = card.innerText.toLowerCase();
+
+if(text.includes(input)){
+    card.style.display = "block";
+}else{
+    card.style.display = "none";
+}
+
+});
+
+}
+
+</script>
+<script>
+
+function filterCategory(category){
+
+let cards = document.querySelectorAll(".card");
+
+cards.forEach(function(card){
+
+let type = card.querySelector(".category").innerText;
+
+if(category === "all" || type.includes(category)){
+card.style.display = "block";
+}else{
+card.style.display = "none";
+}
+
+});
+
+}
+
+</script>
+<script>
+
+function viewProduct(name){
+
+let products = JSON.parse(localStorage.getItem("products")) || [];
+
+let product = products.find(p => p.name === name);
+
+localStorage.setItem(
+"selectedProduct",
+JSON.stringify(product)
+);
+
+window.location.href="product-details.html";
+
+}
+
+</script>
+<div class="bottom-menu">
+
+<a href="index.html">
+🏠<br>
+Home
+</a>
+
+<a href="cart.html">
+🛒<br>
+Cart
+</a>
+
+<a href="my-orders.html">
+📦<br>
+Orders
+</a>
+
+<a href="profile.html">
+👤<br>
+Profile
+</a>
+
+</div>
+</boday>
+</html>
